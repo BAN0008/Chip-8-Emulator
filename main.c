@@ -48,7 +48,9 @@ void initialize(char * fname)
 	fseek(program, 0L, SEEK_END);
 	uint16_t program_size = ftell(program);
 	rewind(program);
-	fread(&memory + 0x200, 1, program_size - 1, program);
+	fread(memory + 0x200, 1, program_size, program); //Segfaults
+	//uint8_t *test_mem = calloc(4096, 1);
+	//fread(test_mem + 0x200, 1, program_size, program);
 	fclose(program);
 }
 
@@ -59,10 +61,9 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 	//Create Window
-	SDL_Renderer *renderer = NULL;
 	SDL_Window   *window   = NULL;
-	SDL_CreateWindowAndRenderer(64, 32, 0, &window, &renderer);
-
+	SDL_Renderer *renderer = NULL;
+	SDL_CreateWindowAndRenderer(512, 512, 0, &window, &renderer);
 	initialize(argv[1]);
 
 	while (true)

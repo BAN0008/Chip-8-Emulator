@@ -112,6 +112,7 @@ void emulate_cycle()
 			program_counter = (opcode & 0x0FFF) + v_register[0];
 			break;
 		case 0xC000: //Sets VX to the result of a bitwise and operation on a random number (Typically: 0 to 255) and NN.
+			 v_register[opcode & 0x0F00] = program_counter; //UNFINISHED
 			break;
 		case 0xD000: //Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn’t change after the execution of this instruction. As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn’t happen
 			for (uint8_t i = I_index_register; i < (opcode & 0x000F) * 8; i++)
